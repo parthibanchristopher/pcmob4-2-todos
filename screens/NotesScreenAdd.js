@@ -11,10 +11,17 @@ import {
     View,
 } from "react-native";
 
+import { db } from "../firebase";
+import { addDoc, collection } from "firebase/firestore";
+
 export default function NotesScreenAdd() {
     const navigation = useNavigation();
     const [noteTitle, setNoteTitle] = useState("");
-    async function savePost() { }
+
+    async function savePost() { 
+        await addDoc(collection(db, "notes"), { title: noteTitle });
+        navigation.goBack();
+    }
     return (
         <KeyboardAvoidingView
             style={styles.container}
